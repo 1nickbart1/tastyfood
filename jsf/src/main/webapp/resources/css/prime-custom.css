@@ -1,0 +1,84 @@
+
+.value-col .ui-selectonemenu {
+    padding-right: 0em;
+    display: block;
+    /*width: 40%;*/
+}
+
+
+
+.value-col .ui-selectonemenu .ui-selectonemenu-trigger {
+    width: 10%;
+}
+
+/*.upload_file {*/
+/*background-color: white;*/
+/*}*/
+.upload_file .ui-fileupload-buttonbar {
+    background: transparent none;
+    border: none;
+}
+
+.upload_file .ui-fileupload-content {
+    display: none;
+}
+
+.upload_file .ui-fileupload-buttonbar .ui-fileupload-choose {
+    background-color: gray;
+}
+
+.preview-radio .ui-radiobutton {
+    /*margin-right: 50px;*/
+    margin-left: 20px;
+    margin-right: -8px;
+}
+
+.preview-hover-link {
+    display:inline;
+    position: absolute;
+}
+
+
+.preview-delete-link{
+    width: 15px;
+    height: 15px;
+    margin-left: 35px;
+
+
+}
+.custom-text-editor-btns{
+    display: inline-block;
+}
+.text-editor-button{
+    width: 30px;
+    height: 30px;
+}
+.custom-text-editor-btns .ui-state-default .ui-icon{
+    background-image:url("/resources/img/image.png");
+    background-position: center ;
+    background-size: cover;
+    width: 30px;
+    height: 25px;
+}
+.custom-text-editor-btns .upload_file .ui-fileupload-buttonbar .ui-fileupload-choose{
+    background-color: white;
+    border-color: white;
+}
+
+#all_form\:all_table\:1\:block-ui{
+background: transparent;
+    box-shadow: none;
+    border: none;
+}
+.input-units>.ui-inputfield.ui-inputtext.ui-widget.ui-state-default.ui-corner-all{
+   margin-left: 65px;
+    width: 80px;
+}
+.input-product-name>.ui-autocomplete-input.ui-autocomplete-dd-input.ui-inputfield.ui-widget.ui-state-default.ui-corner-left{
+    margin-left: -15px;
+    width: 200px;
+}
+#recipe_form>.row{
+    margin-top: 20px;
+}
+

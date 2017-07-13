@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+
+
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+<ui:composition>
+    <h:body>
+
+
+
+        <div class="row-fluid " >
+
+            <c:forEach items="#{recipiesCategoryBean.recipiesCategories}" var="recipiesCategory">
+
+                <div class="col-md-4 top-buffer">
+
+                    <a href="/recipies.xhtml?catId=#{recipiesCategory.id}" >
+                    <img src="/img?id=#{recipiesCategory.imageId}" class="img-rounded" alt="Cinque Terre" width="304" height="236"/>
+                    <div class="post-content">
+                        #{recipiesCategory.name}
+                        <hr/>
+                        #{recipiesCategory.recipeSet.size()}
+                    </div>
+                    </a>
+                </div>
+            </c:forEach>
+
+
+
+        </div>
+
+
+
+
+    </h:body>
+
+</ui:composition>
+</html>
+

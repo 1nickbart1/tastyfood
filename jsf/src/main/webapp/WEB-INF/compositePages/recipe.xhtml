@@ -1,0 +1,267 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+
+
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+>
+
+<ui:composition>
+    <h:body>
+        <!--<p:commandButton value="Effects" type="button"-->
+                         <!--onclick="openLoginPopUp()"/>-->
+
+        <ul class="breadcrumb">
+            <li><a href="#{menuBean.menu.get(0).url}"> #{menuBean.menu.get(0).menu} </a></li>
+            <li>
+                <a href="/recipies.xhtml?catId=#{recipeBean.recipe.recipiesCategory.id}"> #{recipeBean.recipe.recipiesCategory.name}</a>
+            </li>
+            <li class="active"> #{recipeBean.recipe.title}</li>
+        </ul>
+
+        <div class="row">
+            <div class="col-md-7">
+                <h2 class="recipe-title">
+                    #{recipeBean.recipe.title}
+                </h2>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-12">
+
+
+                <section class="cd-single-item">
+                    <div class="cd-slider-wrapper">
+                        <ul class="cd-slider">
+
+                            <li class="selected"><img alt="#{recipeBean.recipe.title}" class="slider-image"
+                                                      src="/img?id=#{recipeBean.recipe.imageId}"/></li>
+
+                            <c:forEach items="#{recipeBean.sliderImages}" var="slider">
+
+                                <li><img alt="#{recipeBean.recipe.title}" class="slider-image"
+                                         src="/img?id=#{slider.image.id}"/></li>
+
+
+                            </c:forEach>
+
+
+                            <!--<li class="selected "><img class="slider-image"  src="/img?id=5" alt="Product Image 1"/></li>-->
+                            <!--<li><img class="slider-image" src="/img?id=3" alt="Product Image 1"/></li>-->
+                            <!--<li><img class="slider-image"  src="/img?id=4" alt="Product Image 2"/></li>-->
+                        </ul> <!-- cd-slider -->
+
+
+                        <ul class="cd-slider-navigation">
+                            <li><a href="#0" class="cd-prev inactive">Next</a></li>
+                            <li><a href="#0" class="cd-next">Prev</a></li>
+                        </ul> <!-- cd-slider-navigation -->
+
+                        <a href="#0" class="cd-close">Close</a>
+                    </div> <!-- cd-slider-wrapper -->
+
+                    <div class="cd-item-info">
+
+                        <div class="product-list__content">
+                            <c:forEach items="#{recipeBean.recipe.recipiesProductSet}" var="product">
+
+
+                                <p class="product-list-line">
+
+                                <span class="product-info">
+                                     #{product.product.name}
+                                </span>
+                                    <span class="product-units  badge">
+
+
+                                    #{product.units}
+
+                                        <!--#{product.product.productUnit.name}-->
+                                </span>
+
+
+                                </p>
+
+                            </c:forEach>
+                        </div>
+
+                    </div> <!-- cd-item-info -->
+
+                </section> <!-- cd-single-item -->
+
+
+            </div>
+
+
+        </div>
+
+        <div class="panel panel-white post panel-shadow">
+            <div class="row energy-value-info">
+
+                <div class="col-md-1 ">
+                    <!--<span class="glyphicon glyphicon-time"></span>-->
+
+                    <p:commandLink id="favorite_link" ajax="true"
+                                   onclick="#{authBean.anonymousUser?
+                                   'openLoginPopUp()':''}">
+
+                        <span class="favorite-glyphicon glyphicon glyphicon-heart#{recipeBean.inFavorite?'':'-empty'}"></span>
+                        <p:ajax listener="#{recipeBean.favoriteListener}"
+                                update="favorite_link"/>
+
+                    </p:commandLink>
+
+                </div>
+
+
+                <div class="col-md-2 ">
+                    <!--<span class="glyphicon glyphicon-time"></span>-->
+
+                    <img class="recipe-icon" src="/resources/img/iconsTime.png" alt="time"/>
+                    #{recipeBean.recipe.cookTime} минут
+                </div>
+
+                <div class="col-md-2 ">
+                    <img class="recipe-icon" src="/resources/img/proteins.svg" alt="proteins"/>
+                    #{recipeBean.recipeEnergyValue.proteins}
+                </div>
+
+                <div class="col-md-2 ">
+                    <img class="recipe-icon" src="/resources/img/fat.png" alt="fat"/>
+                    #{recipeBean.recipeEnergyValue.fat}
+                </div>
+
+                <div class="col-md-2 ">
+                    <img class="recipe-icon" src="/resources/img/carbohydrates.png" alt="carbohydrates"/>
+                    #{recipeBean.recipeEnergyValue.carbohydrates}
+                </div>
+
+                <div class="col-md-2 ">
+                    <img class="recipe-icon" src="/resources/img/calories.png" alt="calories"/>
+                    #{recipeBean.recipeEnergyValue.calories}
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="row-fluid ">
+            <h:outputText value="#{recipeBean.recipe.text}" escape="false"/>
+
+        </div>
+
+        <div class="row row-social">
+            <!--<div class="col-md-2">-->
+            <!--<div id="vk-container"/>-->
+            <!--<div id="vk-container2">-->
+            <!--<script type="text/javascript">-->
+
+            <!--document.write(VK.Share.button());-->
+            <!--</script>-->
+            <!--</div>-->
+            <!--</div>-->
+
+            <div class="social-likes">
+                <div class="facebook" title="Поделиться ссылкой на Фейсбуке">Facebook</div>
+                <div class="twitter" title="Поделиться ссылкой в Твиттере">Twitter</div>
+                <div class="mailru" title="Поделиться ссылкой в Моём мире">Мой мир</div>
+                <div class="vkontakte" title="Поделиться ссылкой во Вконтакте">Вконтакте</div>
+                <div class="odnoklassniki" title="Поделиться ссылкой в Одноклассниках">Одноклассники</div>
+                <div class="plusone" title="Поделиться ссылкой в Гугл-плюсе">Google+</div>
+            </div>
+
+        </div>
+        <div class="row">
+            <h:form >
+            <!--<h:form rendered="#{not authBean.isAnonymousUser()}">-->
+                Приятного аппетита! Оцените рецепт:)
+                <div onclick="#{authBean.anonymousUser?
+                                   'openLoginPopUp()':''}">
+                <p:rating readonly="#{authBean.anonymousUser}" value="#{recipeBean.recipeRating.rating}" stars="5"
+
+                          cancel="false">
+                    <p:ajax event="rate" listener="#{recipeBean.rateListener}" process="@this"/>
+
+                </p:rating>
+                </div>
+                <input type="hidden" name="${_csrf.parameterName}"
+                       value="${_csrf.token}"/>
+            </h:form>
+        </div>
+        <!--<div class="row social-bar">-->
+        <!--Поделится в   <div class="ya-share2" data-services="vkontakte,facebook,gplus" data-size ="m" data-counter=""></div>-->
+        <!--</div>-->
+
+        <h:form id="all-comments-form">
+            <h:panelGroup layout="block" id="comments-panel">
+                <c:forEach items="#{recipeBean.recipe.comments}" var="comment">
+
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <div class="panel panel-white post panel-shadow">
+                                <div class="post-heading">
+                                    <div class="pull-left image">
+                                        <img src="/img?id=#{comment.user.avatarId}" class="img-circle avatar"
+                                             alt="user profile image"/>
+                                    </div>
+                                    <div class="pull-left meta">
+                                        <div class="title h5">
+                                            <a href="#"><b>#{comment.user.username}</b></a>
+                                            оставил комментарий.
+                                        </div>
+                                        <h6 class="text-muted time">#{comment.date}</h6>
+                                    </div>
+                                </div>
+                                <div class="post-description">
+                                    <p><h:outputText value="#{comment.text}" escape="false"/></p>
+                                    <div class="stats">
+                                        <!--<a href="#" class="btn btn-default stat-item">-->
+                                        <!--<i class="fa fa-thumbs-up icon"></i>2-->
+                                        <!--</a>-->
+                                        <!--<a href="#" class="btn btn-default stat-item">-->
+                                        <!--<i class="fa fa-thumbs-down icon"></i>12-->
+                                        <!--</a>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
+            </h:panelGroup>
+        </h:form>
+        <div class="row">
+            <!--<div id="txtEditor"></div>-->
+            <h:form id="comment-form">
+
+
+                <p:inputText id="txtEditor" value="#{recipeBean.commentText}">
+                    <p:ajax event="change" process="@this" update="@this"/>
+
+                </p:inputText>
+                <input type="hidden" name="${_csrf.parameterName}"
+                       value="${_csrf.token}"/>
+                <p:commandButton styleClass="btn  btn-primary btn-default" oncomplete="rc();"
+                                 onclick="saveDataToJSFInput();" value="Оставить комментарий">
+                    <p:ajax listener="#{recipeBean.saveComment}" process=":comment-form:txtEditor @this"
+                            update=":all-comments-form:comments-panel"/>
+                </p:commandButton>
+                <p:remoteCommand update=":all-comments-form:comments-panel" id="rc" name="rc"/>
+            </h:form>
+
+
+        </div>
+        <!--<p:dialog maximizable="true"  modal="true" minHeight="300"  header="Вход" widgetVar="loginPopUpWidget"-->
+                  <!--showEffect="explode" hideEffect="bounce" height="250">-->
+            <!--<ui:include  src="login.xhtml"/>-->
+        <!--</p:dialog>-->
+    </h:body>
+
+
+</ui:composition>
+</html>
+

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition>
+
+    <h:form id="all_form">
+        <input type="hidden" name="${_csrf.parameterName}"
+               value="${_csrf.token}" />
+        <p:panel id="all_id" widgetVar="editable" closable="true" visible="#{not productBean.editMode}"
+                 toggleable="true">
+
+            <p:dataTable visible="false" id="all_table" var="product"
+                         value="#{productBean.allProducts}">
+                <p:column headerText="Id" width="40px;">
+                    <h:outputText value="#{product.id}"/>
+                </p:column>
+
+                <p:column headerText="name">
+                    <h:outputText value="#{product.name}"/>
+                </p:column>
+
+                <p:column headerText="единица измерения">
+                    <h:outputText value="#{product.productUnit.name}"/>
+                </p:column>
+
+                <p:column headerText="белки" width="100px;">
+                    <h:outputText value="#{product.productDescription.proteins}"/>
+                </p:column>
+
+                <p:column headerText="жиры" width="100px;">
+                    <h:outputText value="#{product.productDescription.fat}"/>
+                </p:column>
+
+                <p:column headerText="углеводы" width="100px;">
+                    <h:outputText value="#{product.productDescription.carbohydrates}"/>
+                </p:column>
+
+                <p:column headerText="калории" width="100px;">
+                    <h:outputText value="#{product.productDescription.calories}"/>
+                </p:column>
+
+                <p:column>
+                    <h:panelGroup style="white-space: nowrap">
+                        <p:commandButton ajax="true" value="edit" id="btn_edit"
+                                         styleClass="ui-priority-primary">
+                            <f:attribute name="product" value="#{product}"/>
+                            <p:ajax process="@this"
+                                    update=":edit_form  :all_form"
+                                    listener="#{productBean.editProduct}"/>
+                        </p:commandButton>
+                        <p:commandButton ajax="false" id="btn_del"
+                                         icon="ui-icon-trash"
+                                         title="Delete this actor"
+                                         actionListener="#{productBean.deleteProduct}"
+                                         styleClass="ui-priority-primary">
+                            <f:attribute name="product" value="#{product}"/>
+
+                        </p:commandButton>
+
+                        <p:commandButton ajax="true" value="test" id="btn_test"
+                                         styleClass="ui-priority-primary">
+                            <f:attribute name="product" value="#{product}"/>
+                            <p:ajax
+
+                                    listener="#{productBean.testListener}"/>
+                        </p:commandButton>
+                    </h:panelGroup>
+                </p:column>
+
+            </p:dataTable>
+
+
+
+
+        <p:commandButton visible="#{not productBean.editMode}" ajax="true" value="new" id="btn_new" immediate="true"
+                             styleClass="ui-priority-primary">
+                <p:ajax process="@this"
+                        update=":edit_form :all_form"
+                        listener="#{productBean.editProduct}"/>
+            </p:commandButton>
+
+        </p:panel>
+    </h:form>
+
+
+
+
+    <h:form id="edit_form">
+        <input type="hidden" name="${_csrf.parameterName}"
+               value="${_csrf.token}" />
+        <p:panel id="edit_id" widgetVar="editable" closable="true"
+                 toggleable="true" visible="#{productBean.editMode}">
+
+
+            <p:growl id="mes" showDetail="true" sticky="true"/>
+
+
+            <h:panelGrid columns="2" columnClasses="label-col, value-col ">
+                <h:outputText value="Название"/>
+                <p:inputText label="Название" value="#{productBean.curProduct.name}" required="#{productBean.editMode}"
+                />
+
+                <h:outputText value="единица измерения"/>
+
+
+                <p:selectOneMenu label="Единица измерения" required="#{productBean.editMode}"
+                                 value="#{productBean.curProduct.productUnit.id}">
+                    <!--<p:ajax event="change" rocess="@this"-->
+                    <!--update="mes"-->
+                    <!--listener="#{productBean.socClicked}"/>-->
+
+                    <c:forEach var="unit" items="#{productBean.avaliableUnits}">
+
+                        <f:selectItem itemLabel="#{unit.name}" itemValue="#{unit.id}"/>
+
+                    </c:forEach>
+
+                </p:selectOneMenu>
+
+                <h:outputText value="белки"/>
+                <p:inputNumber label="белки" value="#{productBean.productDescription.proteins}"
+                               required="#{productBean.editMode}"/>
+
+                <h:outputText value="жиры"/>
+                <p:inputNumber label="Жиры" value="#{productBean.productDescription.fat}"
+                               required="#{productBean.editMode}"/>
+
+                <h:outputText value="углеводы"/>
+                <p:inputNumber label="Углеводы" value="#{productBean.productDescription.carbohydrates}"
+                               required="#{productBean.editMode}"/>
+
+                <h:outputText value="калории"/>
+                <p:inputNumber label="Калории" value="#{productBean.productDescription.calories}"
+                               required="#{productBean.editMode}"/>
+
+            </h:panelGrid>
+
+            <p:commandButton action="editProduct" ajax="false" value="back" id="btn_bsck" immediate="true"
+                             styleClass="ui-priority-primary"/>
+            <p:commandButton action="editProduct" ajax="false" update=":edit_form" value="save" id="btn_prod"
+                             actionListener="#{productBean.saveProduct}"
+                             styleClass="ui-priority-primary"/>
+
+
+        </p:panel>
+    </h:form>
+</ui:composition>
+</html>

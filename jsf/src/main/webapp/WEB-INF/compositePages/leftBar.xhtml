@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+>
+
+<ui:composition>
+
+    <h:body>
+
+
+        <h:form id="link_form">
+            <input type="hidden" name="${_csrf.parameterName}"
+                   value="${_csrf.token}" />
+            <div class="col-sm-2 sidenav">
+                <h:panelGroup id="admin_left_bar" rendered="#{authBean.admin}" >
+
+                <p><p:commandLink id="prod_link" ajax="true">
+                    <h:outputText value="продукты"/>
+                    <p:ajax update="main-content"
+                            listener="#{adminController.productEditListener}"/>
+                </p:commandLink>
+                </p>
+                    <p><p:commandLink id="recipe_all" ajax="true">
+                        <h:outputText value="Рецепты"/>
+                        <p:ajax listener="#{adminController.allRecipeEditListener}"
+                                update="main-content"/>
+                    </p:commandLink>
+                    </p>
+
+                <p><p:commandLink id="recipe_link" ajax="true">
+                    <h:outputText value="Новый рецепт"/>
+                    <p:ajax listener="#{adminController.recipeEditListener}"
+                            update="main-content"/>
+                </p:commandLink>
+                </p>
+
+                </h:panelGroup>
+                <p><a href="#">Link</a></p>
+            </div>
+
+        </h:form>
+
+    </h:body>
+</ui:composition>
+</html>

@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:body>
+
+
+    <h:panelGroup id="new_recipe_panel">
+        <h:form id="recipe_form" enctype="multipart/form-data">
+            <input type="hidden" name="${_csrf.parameterName}"
+                   value="${_csrf.token}"/>
+            <div class="row">
+                <div class="col-md-3">
+
+
+                    <h:outputText value="Заголовок"/>
+                </div>
+                <div class="col-md-4">
+                    <p:inputText label="Заголовок" value="#{recipeAdminBean.currRecipe.title}"
+
+                    />
+
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+
+
+                    <h:outputText value="Время готовки"/>
+                </div>
+                <div class="col-md-4">
+                    <p:inputNumber label="Время готовки" value="#{recipeAdminBean.currRecipe.cookTime}"
+
+                    />
+                </div>
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-md-3">
+                    <div class="row">
+                        <p:fileUpload mode="advanced" styleClass="upload_file"
+                                      multiple="true"
+                                      label="  фото" fileUploadListener="#{recipeAdminBean.saveSlidersImg}"
+                                      update=":recipe_form:slider_images"
+                                      uploadLabel="загрузить" auto="true"/>
+
+                    </div>
+                    <div class="row">
+                        Титульное фото
+
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <h:panelGroup layout="block" id="slider_images">
+                        <div class="">
+
+                            <div class="row">
+                                <c:forEach items="#{recipeAdminBean.keysForSlidersMap}" var="imageKey">
+
+                                    <div class="preview-hover-link">
+                                        <p:commandButton styleClass="preview-delete-link" icon="ui-icon-close"
+                                                         title="Icon Only"
+
+                                                         ajax="true">
+                                            <f:attribute name="image_key" value="#{imageKey}"/>
+                                            <p:ajax update=":recipe_form:slider_images"
+                                                    listener="#{recipeAdminBean.deleteImg}"/>
+                                        </p:commandButton>
+
+                                    </div>
+
+                                    <p:graphicImage value="#{sessionImageContainer.streamedTitleImage}" width="50px;"
+                                                    height="50px">
+                                        <f:param name="image_key" value="#{imageKey}"/>
+                                    </p:graphicImage>
+                                </c:forEach>
+                            </div>
+                            <div class="row">
+                                <p:selectOneRadio styleClass="preview-radio" value="#{recipeAdminBean.mainImageKey}"
+                                                  label="главное фото">
+                                    <p:ajax event="change" process="@this" update="@this"/>
+                                    <c:forEach items="#{recipeAdminBean.keysForSlidersMap}" var="imageKey">
+                                        <f:selectItem itemValue="#{imageKey}"/>
+                                    </c:forEach>
+                                </p:selectOneRadio>
+                            </div>
+
+                        </div>
+
+                    </h:panelGroup>
+                </div>
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-md-3">
+                    Категория
+
+
+                </div>
+                <div class="col-md-3 value-col">
+                    <p:selectOneMenu value="#{recipeAdminBean.recipeCategoryId}">
+                        <p:ajax event="change" process="@this" update="@this"/>
+                        <c:forEach items="#{recipeAdminBean.avaliableCategories}" var="category">
+                            <f:selectItem itemValue="#{category.id}" itemLabel="#{category.name}"/>
+
+                        </c:forEach>
+                    </p:selectOneMenu>
+                </div>
+            </div>
+
+            <div class=" row">
+                <div class="col-md-2">
+
+                    <p:autoComplete
+                                    styleClass="input-product-name" id="product_input" cache="true" dropdown="true"
+                                    cacheTimeout="30000"
+                                    value="#{recipeAdminBean.currProductName}"
+                                    completeMethod="#{recipeAdminBean.getProductsNames()}">
+                        <p:ajax event="itemSelect" listener="#{bean.action}" process="@this"/>
+                        <p:ajax event="change" process="@this"/>
+                    </p:autoComplete>
+                </div>
+                <div class="col-md-1 col-md-offset-1">
+
+
+                    <h:outputText value="Количество (шт/г)"/>
+                </div>
+                <div class="col-md-2">
+                    <p:inputNumber id="units-input" styleClass="input-units" value="#{recipeAdminBean.units}">
+                        <p:ajax event="change" process="@this"/>
+                    </p:inputNumber>
+
+                </div>
+                <div class="col-md-1">
+                    <p:commandButton value="Добавить"
+                                     ajax="true" id="btn_add_prod"
+                                     styleClass="ui-priority-primary">
+                        <p:ajax listener="#{recipeAdminBean.addProduct}"
+                                update=":recipe_form:product_table :recipe_form:product_input :recipe_form:units-input"
+                        />
+
+                    </p:commandButton>
+
+
+                </div>
+
+
+            </div>
+            <div class=" row">
+                <div class=" col-md-7">
+                <p:dataTable id="product_table" value="#{recipeAdminBean.currRecipe.recipiesProductSet}"
+                             var="recipeProduct">
+                    <p:column headerText="продукт">
+                        <p:outputLabel value="#{recipeProduct.product.name}"/>
+                    </p:column>
+                    <p:column headerText="количество">
+                        <p:outputLabel value="#{recipeProduct.units}"/>
+                    </p:column>
+                    <p:column>
+                        <p:commandButton value="удалить"
+                                         ajax="true" id="btn_del_prod"
+                                         styleClass="ui-priority-primary">
+                            <p:ajax listener="#{recipeAdminBean.deleteProduct}" update=":recipe_form:product_table"/>
+                            <f:attribute name="recipeProduct" value="#{recipeProduct}"/>
+
+                        </p:commandButton>
+                    </p:column>
+
+
+                </p:dataTable>
+                </div>
+            </div>
+            <br></br>
+            <br></br>
+            <br></br>
+            <div class="row">
+
+
+                <p:remoteCommand name="rc" oncomplete="setTimeout(rc2(),500)"
+                                 update=":recipe_form:test_editor"
+                                 process="@this :recipe_form:test_editor" partialSubmit="true"/>
+                <p:remoteCommand name="rc2" update=":recipe_form:test_editor"
+                                 actionListener="#{recipeAdminBean.addImageToText}"
+                                 process="@this :recipe_form:test_editor" partialSubmit="true"/>
+
+
+            </div>
+            <div class="row">
+
+
+                <p:textEditor immediate="true" id="test_editor" widgetVar="test_editor"
+                              value="#{recipeAdminBean.currRecipe.text}" height="300" style="margin-bottom:10px"
+                              placeholder="Enter your content">
+
+                    <f:facet name="toolbar">
+
+             <span class="ql-formats">
+                <button class="ql-bold"></button>
+                <button class="ql-italic"></button>
+                <button class="ql-underline"></button>
+                <button class="ql-strike"></button>
+            </span>
+                        <span class="ql-formats">
+                <select class="ql-font"></select>
+                <select class="ql-size"></select>
+
+            </span>
+
+                        <div class="custom-text-editor-btns">
+
+                            <p:fileUpload oncomplete="rc()"
+                                          fileUploadListener="#{recipeAdminBean.loadImageToRecipeText}"
+                                          label="" styleClass="upload_file" auto="true">
+                                <input type="hidden" name="${_csrf.parameterName}"
+                                       value="${_csrf.token}"/>
+
+                            </p:fileUpload>
+
+                        </div>
+
+
+                    </f:facet>
+                </p:textEditor>
+
+            </div>
+            <p:commandButton value="Clear" type="button" onclick="PF('test_editor').clear();" icon="ui-icon-close">
+                <p:ajax listener="#{recipeAdminBean.clearRecipeText}" process="@this :recipe_form:test_editor"/>
+            </p:commandButton>
+
+            <p:commandButton ajax="false" process="@this" actionListener="#{recipeAdminBean.saveRecipe}"
+                             styleClass="ui-priority-primary" value="save"/>
+            <p:growl id="mes" showDetail="true" sticky="true"/>
+        </h:form>
+    </h:panelGroup>
+
+
+</h:body>
+</html>
