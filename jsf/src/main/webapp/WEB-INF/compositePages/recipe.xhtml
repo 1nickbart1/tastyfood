@@ -40,20 +40,20 @@
                         <ul class="cd-slider">
 
                             <li class="selected"><img alt="#{recipeBean.recipe.title}" class="slider-image"
-                                                      src="/img?id=#{recipeBean.recipe.imageId}"/></li>
+                                                      src="/api/image?id=#{recipeBean.recipe.imageId}"/></li>
 
                             <c:forEach items="#{recipeBean.sliderImages}" var="slider">
 
                                 <li><img alt="#{recipeBean.recipe.title}" class="slider-image"
-                                         src="/img?id=#{slider.image.id}"/></li>
+                                         src="/api/image?id=#{slider.image.id}"/></li>
 
 
                             </c:forEach>
 
 
-                            <!--<li class="selected "><img class="slider-image"  src="/img?id=5" alt="Product Image 1"/></li>-->
-                            <!--<li><img class="slider-image" src="/img?id=3" alt="Product Image 1"/></li>-->
-                            <!--<li><img class="slider-image"  src="/img?id=4" alt="Product Image 2"/></li>-->
+                            <!--<li class="selected "><img class="slider-image"  src="/api/image?id=5" alt="Product Image 1"/></li>-->
+                            <!--<li><img class="slider-image" src="/api/image?id=3" alt="Product Image 1"/></li>-->
+                            <!--<li><img class="slider-image"  src="/api/image?id=4" alt="Product Image 2"/></li>-->
                         </ul> <!-- cd-slider -->
 
 
@@ -206,7 +206,7 @@
                             <div class="panel panel-white post panel-shadow">
                                 <div class="post-heading">
                                     <div class="pull-left image">
-                                        <img src="/img?id=#{comment.user.avatarId}" class="img-circle avatar"
+                                        <img src="/api/image?id=#{comment.user.avatarId}" class="img-circle avatar"
                                              alt="user profile image"/>
                                     </div>
                                     <div class="pull-left meta">

@@ -81,6 +81,7 @@
     <orderEntry type="library" name="Maven: org.imgscalr:imgscalr-lib:4.2" level="project" />
     <orderEntry type="module" module-name="utils" />
     <orderEntry type="module" module-name="dto" />
+    <orderEntry type="module" module-name="api" />
     <orderEntry type="library" name="Maven: commons-io:commons-io:2.5" level="project" />
   </component>
 </module>

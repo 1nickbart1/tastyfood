@@ -39,6 +39,7 @@ public class MenuLoader {
 //         menuItems = companyDAO.getAll();
     }
 
+    @Deprecated
     public List<Menu> getMenuItems() {
         menuItems = menuDao.getAll();
         Collections.sort(menuItems);

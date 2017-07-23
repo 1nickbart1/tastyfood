@@ -16,7 +16,7 @@
        <p:dataTable visible="false" id="all_table" var="recipe"
                      value="#{allRecipesAdminBean.allRecipies}">
             <p:column headerText="" width="10px;">
-                <img src="/img?id=#{recipe.imageId}" width="35px" height="35px" alt="#{recipe.title}"/>
+                <img src="/api/image?id=#{recipe.imageId}" width="35px" height="35px" alt="#{recipe.title}"/>
             </p:column>   
         <p:column headerText="Id" width="40px;">
             <h:outputText value="#{recipe.id}"/>

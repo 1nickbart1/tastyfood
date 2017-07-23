@@ -207,7 +207,7 @@ public class RecipeAdminBean implements Serializable {
         StringBuilder newText = new StringBuilder();
         newText.append(currRecipe.getText());
 //        newText.append(recipeText);
-        newText.append("<img src='/img?id=");
+        newText.append("<img src='/api/image?id=");
         newText.append(tempImgId);
         newText.append("'>");
         currRecipe.setText(newText.toString());
@@ -256,7 +256,7 @@ public class RecipeAdminBean implements Serializable {
 
         StringBuilder newText = new StringBuilder();
 //        newText.append(recipeText);
-//        newText.append("<img src='/img?id=");
+//        newText.append("<img src='/api/image?id=");
 //        newText.append(imageId);
 //        newText.append("'>");
 //        recipeText = newText.toString();
