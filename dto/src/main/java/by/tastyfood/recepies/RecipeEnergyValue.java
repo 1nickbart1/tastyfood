@@ -1,17 +1,32 @@
 package by.tastyfood.recepies;
 
+
+import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+import java.io.Serializable;
+
 /**
  * Created by Nikolay on 06.06.2017.
  */
-public class RecipeEnergyValue {
+@JsonSerialize
+public class RecipeEnergyValue implements Serializable{
 
+    @JsonProperty
     private Double proteins;
+    @JsonProperty
     private Double carbohydrates;
+    @JsonProperty
     private Double fat;
+    @JsonProperty
     private Double calories;
+    @JsonProperty
     private boolean proteinsCanBeCalculated =true;
+    @JsonProperty
     private boolean carbohydratesCanBeCalculated =true;
+    @JsonProperty
     private boolean fatCanBeCalculated =true;
+    @JsonProperty
     private boolean caloriesCanBeCalculated =true;
 
     public RecipeEnergyValue(){

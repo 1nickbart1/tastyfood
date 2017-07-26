@@ -3,8 +3,8 @@ package by.tastyfood.model.Recipies;
 import by.tastyfood.dao.entity.*;
 import by.tastyfood.dao.i.IFavoriteRecipeDao;
 import by.tastyfood.dao.i.IRecipeRatingDao;
-import by.tastyfood.model.ProductUnitsEnum;
-import by.tastyfood.model.security.UserService;
+import by.tastyfood.exceptions.ModelException;
+import by.tastyfood.model.users.UserService;
 import by.tastyfood.recepies.RecipeEnergyValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +24,8 @@ public class RecipiesModel {
     UserService userService;
     @Autowired
     IFavoriteRecipeDao favoriteRecipeDao;
+    @Autowired
+    RecipiesLoader recipiesLoader;
 
     public RecipeEnergyValue getRecipeEnergyValueFromProducts(Set<RecipiesProduct> productSet) {
 
@@ -143,6 +145,17 @@ public class RecipiesModel {
                 destList.add(favRec.getRecipe()));
 
         return destList;
+    }
+
+    public RecipeEnergyValue getRecipeEnergyValueForRecipe(Long id)throws  ModelException{
+       Recipe  recipe=recipiesLoader.getRecipeById(id);
+
+       if(recipe == null){
+           throw new ModelException("cant find recipe for id "+ id);
+       }
+
+       return getRecipeEnergyValueFromProducts(recipe.getRecipiesProductSet());
+
     }
 
 }

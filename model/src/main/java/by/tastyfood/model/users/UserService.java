@@ -1,4 +1,4 @@
-package by.tastyfood.model.security;
+package by.tastyfood.model.users;
 
 import by.tastyfood.dao.entity.Roles;
 import by.tastyfood.dao.entity.Users;
